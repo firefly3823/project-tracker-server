@@ -24,3 +24,37 @@ exports.addProjects = async (req, res) => {
 
     }
 }
+
+//only user Project
+
+exports.allUserProjects = async (req,res)=>{
+    const userId = req.payload
+    try{
+        const userProject = await projects.find({userId})
+        res.status(200).json(userProject)
+    }catch(err){
+        res.status(401).json(err)
+    }
+}
+
+//all Project - token req
+exports.allProjects = async (req, res) => {
+    try {
+        const projectDetails = await projects.find()
+        res.status(200).json(projectDetails)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+//get home projects
+
+exports.getHomeProjects = async (req,res)=> {
+    try {
+        const homeProjects = await projects.find().limit(3)
+        res.status(200).json(homeProjects)
+    } catch (err) {
+
+        res.status(401).json(err)
+    }
+}
