@@ -24,9 +24,7 @@ exports.addProjects = async (req, res) => {
 
     }
 }
-
 //only user Project
-
 exports.allUserProjects = async (req,res)=>{
     const userId = req.payload
     try{

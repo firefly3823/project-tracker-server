@@ -9,6 +9,7 @@ const ptServer = express()
 ptServer.use(cors())
 ptServer.use(express.json())
 ptServer.use(router)
+ptServer.use('/uploads',express.static('./uploads'))
 const PORT = 4000 || process.env.PORT
 
 ptServer.listen(PORT, ()=>{
