@@ -2,7 +2,7 @@
 const users = require('../Models/userSchema')
 const jwt = require('jsonwebtoken')
 
-
+//REGISTER
 exports.register = async (req, res) => {
     console.log('Inside register controller');
     const { username, email, password } = req.body
@@ -23,6 +23,7 @@ exports.register = async (req, res) => {
         res.status(401).json(`Register API Failed ${err}`)
     }
 }
+//LOGIN
 exports.login = async (req,res)=>{
     console.log('inside login function');
     const {email,password} = req.body
@@ -41,5 +42,24 @@ exports.login = async (req,res)=>{
             }
     } catch (err) {
         res.status(401).json(`Login API Failed ${err}`)
+    }
+}
+
+//Edit
+
+exports.editUser = async (req,res)=>{
+    const userId = req.payload
+    const {username,email,password,github,linkedin,profile} = req.body
+    const uploadImage = req.file?req.file.filename:profile
+    try{
+        const updateUSer = await users.findByIdAndUpdate({_id:userId},{
+            username,email,password,github,linkedin,profile:uploadImage
+        },{new:true})
+        
+        await updateUSer.save()
+        res.status(200).json(updateUSer)
+        
+    }catch(err){
+        res.status(401).json(err)
     }
 }

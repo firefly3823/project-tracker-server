@@ -6,6 +6,7 @@ const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const multerConfig = require('../middlewares/multerMiddleware')
 //register
 
+
 router.post('/user/register', userController.register)
 
 
@@ -33,6 +34,9 @@ router.put('/project/edit/:id', jwtMiddleware, multerConfig.single('projectThumb
 //delete project
 
 router.delete('/project/remove/:id',jwtMiddleware,projectController.deleteProjectController)
+
+// update user
+router.put('/user/edit',jwtMiddleware,multerConfig.single(`profileImage`),userController.editUser)
 
 // export router
 module.exports = router
