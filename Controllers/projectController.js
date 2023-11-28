@@ -60,3 +60,34 @@ exports.getHomeProjects = async (req,res)=> {
         res.status(401).json(err)
     }
 }
+
+// edit project
+
+exports.editProjectController = async (req,res)=>{
+    // get project id
+    const {id} = req.params
+    const userId = req.payload
+    const {title,language,overview,github,website,projectThumb} = req.body
+    const uploadProjectImage = req.file?req.file.filename:projectThumb
+
+    try{
+        const updateProject = await projects.findByIdAndUpdate({_id:id},{
+            title, language, overview, github, website, projectThumb:uploadProjectImage,userId
+        },{new:true})
+        await updateProject.save()
+        res.status(200).json(updateProject)
+    }catch(err){
+
+        res.status(401).json(err)
+    }
+}
+
+exports.deleteProjectController = async (req,res)=>{
+    const {id} = req.params
+    try{
+        const removeProject = await projects.findByIdAndDelete({_id:id})
+        res.status(200).json(removeProject)
+    }catch(err){
+        res.status(401).json(err)
+    }
+}

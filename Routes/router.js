@@ -6,26 +6,33 @@ const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const multerConfig = require('../middlewares/multerMiddleware')
 //register
 
-router.post('/user/register',userController.register)
+router.post('/user/register', userController.register)
 
 
 //login
-router.post('/user/login',userController.login)
+router.post('/user/login', userController.login)
 
 //add project
-router.post('/project/add', jwtMiddleware, multerConfig.single('projectThumb'),projectController.addProjects)
+router.post('/project/add', jwtMiddleware, multerConfig.single('projectThumb'), projectController.addProjects)
 
 //get userprojects
 
-router.get('/user/allprojects',jwtMiddleware,projectController.allUserProjects)
+router.get('/user/allprojects', jwtMiddleware, projectController.allUserProjects)
 
 // get all project
 
-router.get('/project/all',jwtMiddleware,projectController.allProjects)
+router.get('/project/all', jwtMiddleware, projectController.allProjects)
 
 //home projects
 
-router.get('/project/home',projectController.getHomeProjects)
+router.get('/project/home', projectController.getHomeProjects)
+
+// edit project
+router.put('/project/edit/:id', jwtMiddleware, multerConfig.single('projectThumb'), projectController.editProjectController)
+
+//delete project
+
+router.delete('/project/remove/:id',jwtMiddleware,projectController.deleteProjectController)
 
 // export router
 module.exports = router
